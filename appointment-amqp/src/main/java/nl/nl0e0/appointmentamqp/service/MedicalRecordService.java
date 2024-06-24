@@ -6,6 +6,8 @@ import nl.nl0e0.appointmentamqp.repository.MedicalRecordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class MedicalRecordService {
     @Autowired
@@ -14,5 +16,8 @@ public class MedicalRecordService {
         MedicalRecord medicalRecord = new MedicalRecord(createAppointmentDTO);
         repository.save(medicalRecord);
         return medicalRecord;
+    }
+    public List<MedicalRecord> findByOwnerId(Integer ownerId) {
+        return repository.findByOwnerId(ownerId);
     }
 }

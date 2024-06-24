@@ -1,6 +1,7 @@
 package nl.nl0e0.appointmentamqp.controller;
 
 import nl.nl0e0.appointmentamqp.entity.appointment.MedicalRecord;
+import nl.nl0e0.appointmentamqp.entity.appointment.OwnerNameDTO;
 import nl.nl0e0.appointmentamqp.service.AppointmentService;
 import nl.nl0e0.appointmentamqp.service.SuccessActionAlert;
 import nl.nl0e0.appointmentamqp.entity.appointment.CreateAppointmentDTO;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -36,5 +38,11 @@ public class AppointmentController {
             // 返回包含自定義錯誤訊息和HTTP狀態碼的ResponseEntity
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
         }
+    }
+
+    @PostMapping("/appointment/getAppointments")
+    public ResponseEntity<?> getAppointmentByOwnerName(@RequestBody OwnerNameDTO ownerNameDTO){
+        List<?> appointmentEntities = appointmentService.getAppointmentsByOwnerName(ownerNameDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(appointmentEntities);
     }
 }
